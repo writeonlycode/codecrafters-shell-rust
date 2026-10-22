@@ -36,10 +36,8 @@ fn main() {
 
 fn external_program(name: &str, arguments: Vec<&str>) {
     if let Ok(path) = which::which(name) {
-        let _ = process::Command::new(path.clone())
-            .arg(path.file_name().unwrap())
-            .args(arguments.iter().skip(1))
-            .status();
+        let file_name = path.file_name().unwrap();
+        let _ = process::Command::new(file_name).args(arguments).status();
     } else {
         println!("{name}: not found")
     }
