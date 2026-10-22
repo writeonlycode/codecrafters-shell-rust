@@ -36,7 +36,6 @@ fn main() {
 
 fn external_program(name: &str, arguments: Vec<&str>) {
     if let Ok(path) = which::which(name) {
-        println!("{name} is {}", path.to_str().unwrap());
         let _ = process::Command::new(path).args(arguments).status();
     } else {
         println!("{name}: not found")
