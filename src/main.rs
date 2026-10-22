@@ -1,5 +1,8 @@
 #[allow(unused_imports)]
-use std::io::{self, Write};
+use std::{
+    io::{self, Write},
+    process,
+};
 
 mod commands;
 
@@ -24,9 +27,18 @@ fn main() {
                 commands::exit::exit();
             }
             Some(command) => {
-                println!("{}: command not found", command);
+                external_program(command, commands.collect());
             }
             None => {}
         }
+    }
+}
+
+fn external_program(name: &str, arguments: Vec<&str>) {
+    if let Ok(path) = which::which(name) {
+        println!("{name} is {}", path.to_str().unwrap());
+        let _ = process::Command::new(path).args(arguments).status();
+    } else {
+        println!("{name}: not found")
     }
 }
