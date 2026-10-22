@@ -1,5 +1,3 @@
-use std::fs::read_dir;
-
 pub fn type_command(arguments: Vec<&str>) {
     match arguments.into_iter().next() {
         Some("type") => println!("type is a shell builtin"),
@@ -13,5 +11,7 @@ pub fn type_command(arguments: Vec<&str>) {
 fn type_executable(name: &str) {
     if let Ok(path) = which::which(name) {
         println!("{name} is {}", path.to_str().unwrap());
+    } else {
+        println!("{name}: not found")
     }
 }
