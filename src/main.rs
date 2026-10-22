@@ -14,6 +14,9 @@ fn main() {
         let mut commands = command.split_whitespace();
 
         match commands.next() {
+            Some("type") => {
+                commands::type_command::type_command(commands.collect());
+            }
             Some("echo") => {
                 commands::echo::echo(commands.collect());
             }
